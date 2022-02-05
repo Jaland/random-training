@@ -109,7 +109,7 @@ window.onload = () => {
 
   const setBackground = (exercise) => {
     const url =
-      `img/${exercise.replace(/ /g, '')}.gif`
+      `https://raw.githubusercontent.com/Jaland/random-training/main/img/${exercise.replace(/ /g, '')}.gif`
     body.style.backgroundImage = `url("${url}")`
   }
 
