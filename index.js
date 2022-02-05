@@ -42,32 +42,36 @@ window.onload = () => {
       {'jumping jacks': [30, 46]},
       {'butt kicks': [30, 46]}
     ],
-    // Biceps
+    // Biceps and Ticeps
     [
-      {'hammer curl': [30, 61]},
-      {'bicep curl': [30, 61]}
+      {'hammer curl': [40, 61]},
+      {'bicep curl': [40, 61]},
+      {'Standing Dumbbell Curl': [40, 61]},
+      {'Bent Over Tricep Kickbacks': [40, 61]},
+      {'Skull Crushers': [50, 71]},
+      {'Dumbbell Tricep Extensions': [40, 61]}
     ],
     // Abs
     [
       {'crunches': [30, 61]},
-      {'flutter kicks': [20, 46]},
-      {'scissor kicks': [20, 46]},
+      {'flutter kicks': [30, 46]},
       {'russian twist': [30, 46]},
-      {'superman': [30, 61]},
-      {'leg raises': [30, 46]}
+      {'superman': [30, 40]},
+      {'leg raises': [20, 40]}
     ],
-    // Back
+    // Back and sholder
     [
-      {'bent over rows': [30, 61]},
-      {'dumbell scaption': [30, 61]},
-      {'Dumbbell Upright Row': [30, 61]}
+      {'bent over rows': [40, 91]},
+      {'dumbell scaption': [40, 91]},
+      {'Dumbbell Upright Row': [40, 91]},
+      {'Reverse flye': [40,90] },
+      {'Arnold press': [40, 80]}
     ],
     // More abs?
     [
       {'climbers': [30, 61]},
       {'push ups': [20, 31]},
       {'plank rotations': [30, 46]},
-      {'high plank': [30, 61]},
       {'elbow plank': [30, 61]},
       {'shoulder taps': [30, 46]}
     ]
