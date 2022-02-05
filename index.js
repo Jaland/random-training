@@ -16,19 +16,23 @@ window.onload = () => {
 
   let totalSecondsLeft = 0
   let exerciseType
+  let exerciseName
   let widget
   let totalMinutes = 20
   let intervalTimer
   let timeLeft
-  let wholeTime
+  let secondsToExercise
   let exercise
   let isPaused
   let isStarted = false
   let isDone = false
   let isRest = false
 
+
+  // The name of the exercise followed by the minimum/maximum amount of time you want to do it
   const exercises = [
     [
+      //Legs Aerobic
       {'forward lunges': [30, 61]},
       {'side lunges': [30, 61]},
       {'high knees': [30, 46]},
@@ -38,6 +42,12 @@ window.onload = () => {
       {'jumping jacks': [30, 46]},
       {'butt kicks': [30, 46]}
     ],
+    // Biceps
+    [
+      {'hammer curl': [30, 61]}
+      {'bicep curl': [30, 61]}
+    ],
+    // Abs
     [
       {'crunches': [30, 61]},
       {'flutter kicks': [20, 46]},
@@ -46,6 +56,13 @@ window.onload = () => {
       {'superman': [30, 61]},
       {'leg raises': [30, 46]}
     ],
+    // Back
+    [
+      {'bent over rows': [30, 61]},
+      {'dumbell scaption': [30, 61]},
+      {'Dumbbell Upright Row': [30, 61]}
+    ],
+    // More abs?
     [
       {'climbers': [30, 61]},
       {'push ups': [20, 31]},
@@ -92,7 +109,7 @@ window.onload = () => {
 
   const setBackground = (exercise) => {
     const url =
-      `/img/${exercise.replace(/ /g, '')}-${randRange(6)}-${randRange(10)}.jpg`
+      `img/${exercise.replace(/ /g, '')}.gif`
     body.style.backgroundImage = `url("${url}")`
   }
 
@@ -110,60 +127,13 @@ window.onload = () => {
     iframe.src = ''
     iframe.style.display = 'none'
 
-    // display a random recipe
-    const id = randRange(1276)
-    const url = `recipes/${id}.json`
-    window.fetch(url).then(async (resp) => {
-      const recipe = await resp.json()
-      document.querySelector('#recipe').style.display = 'block'
-      document.querySelector('#recipe-title').innerText = recipe.title
-      body.style.backgroundImage = `url("${recipe.image}")`
-      const instructions = document.querySelector('#instructions')
-      const ingredients = document.querySelector('#ingredients')
-      recipe.ingredients.forEach((i) => {
-        const li = document.createElement('li')
-        li.innerText = i
-        ingredients.appendChild(li)
-      })
-      recipe.instructions.split('\n').forEach((i) => {
-        const li = document.createElement('li')
-        li.innerText = i
-        instructions.appendChild(li)
-      })
-      isDone = true
-    })
+  
   }
 
   const update = (value, timePercent) => {
     const offset = -length - length * value / (timePercent)
     progressBar.style.strokeDashoffset = offset
     pointer.style.transform = `rotate(${360 * value / (timePercent)}deg)`
-  }
-
-  const trySoundcloudLoad = () => {
-    const id = randRange(891662780, 100000000)
-    const url = `https://api.soundcloud.com/tracks/${id}`
-    iframe.src = `https://w.soundcloud.com/player/?url=${url}&color=%23ff5500&auto_play=true&show_reposts=false&show_teaser=true&visual=true`
-
-    if (!widget) {
-      widget = SC.Widget(iframe)
-      widget.bind(SC.Widget.Events.ERROR, () => {
-        trySoundcloudLoad()
-      })
-      // Change songs every 120s
-      setInterval(() => {
-        if (!isPaused) {
-          trySoundcloudLoad()
-        }
-      }, 120 * 1000)
-      /*
-      // Soundcloud is not firing the FINISH event anymore
-      widget.bind(SC.Widget.Events.FINISH, () => {
-        console.log('got finish event')
-        trySoundcloudLoad()
-      })
-      */
-    }
   }
 
   const initTimer = () => {
@@ -176,33 +146,39 @@ window.onload = () => {
     const displayOutput = document.querySelector('.display-remain-time')
 
     if (isRest) {
-      exercise = 'Rest'
-      wholeTime = randRange(21, 5)
+      exerciseName = 'Rest'
+      secondsToExercise = randRange(18, 14)
     } else {
-      let exerciseObject = uniform(exercises[exerciseType])
-      exercise = Object.keys(exerciseObject)[0]
-      let timeRange = exerciseObject[exercise]
-      wholeTime = randRange(timeRange[1], timeRange[0])
+      //Get our "type" of exercise
+      let currentExerciseType = exercises[exerciseType]
+      // Select a random exercise of that type
+      let exercise = currentExerciseType[Math.floor(Math.random() * currentExerciseType.length)]
+      // Get exercise name
+      exerciseName = Object.keys(exercise)[0]
+      let exerciseTiming = exercise[exerciseName]
+      // Figure out a time range based on parameters
+      secondsToExercise = randRange(exerciseTiming[1], exerciseTiming[0])
       exerciseType = (exerciseType + 1) % 3
     }
     isRest = !isRest
 
     try {
-      setBackground(exercise)
+      setBackground(exerciseName)
     } catch (e) {
       console.log('could not set background', e)
     }
 
-    if (wholeTime > totalSecondsLeft) {
-      wholeTime = totalSecondsLeft
+    if (secondsToExercise > totalSecondsLeft) {
+      secondsToExercise = totalSecondsLeft
     }
-    sayExercise(wholeTime, exercise)
-    timeLeft = wholeTime
+    sayExercise(secondsToExercise, exerciseName)
+    timeLeft = secondsToExercise
 
-    h1.innerText = exercise
+    h1.innerText = exerciseName
 
-    update(wholeTime, wholeTime) // refreshes progress bar
+    update(secondsToExercise, secondsToExercise) // refreshes progress bar
 
+    // Hmm.... this is not the the most accurate timer but it is fine I guess, will revisit at some point
     function timer () {
       if (intervalTimer) {
         clearInterval(intervalTimer)
@@ -211,13 +187,16 @@ window.onload = () => {
       intervalTimer = setInterval(function () {
         timeLeft = timeLeft - 1
         if (timeLeft < 0 && totalSecondsLeft > 0) {
+          //This is called with a specific exercise is complete
           initTimer()
         } else {
           displayTimeLeft()
           if (timeLeft < 0) {
+            //This is called when the entire workout is complete
+            sayCountdown('Congrats you did it you fat bastard?')
             clearInterval(intervalTimer)
-            sayCountdown('You are now done. How about a snack?')
           } else if (timeLeft < 4) {
+            // This is called when you have 3 or less seconds left
             sayCountdown(timeLeft)
           }
         }
@@ -272,15 +251,18 @@ window.onload = () => {
       let seconds = timeLeft % 60
       let displayString = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`
       displayOutput.textContent = displayString
-      update(timeLeft, wholeTime)
+      update(timeLeft, secondsToExercise)
     }
 
     body.onkeydown = (e) => {
-      if (e.keyCode === 32) {
+      if (e.code === "Space") {
         // spacebar was hit
         e.preventDefault()
         e.stopPropagation()
         pauseTimer()
+      } 
+      else if (e.key === 'Enter') {
+        initTimer()
       }
     }
     pauseTimer(true)
@@ -289,25 +271,15 @@ window.onload = () => {
   function onRestart () {
     exerciseType = randRange(3)
     totalSecondsLeft = Math.ceil(60 * totalMinutes)
-    restart.style.display = 'block'
     isRest = false
     initTimer()
   }
 
   start.addEventListener('click', () => {
-    // initialize soundcloud widget
-    iframe.style.display = 'block'
-    trySoundcloudLoad()
     totalMinutes = parseFloat(input.value) || totalMinutes
     document.querySelector('#circleTimer').style.display = 'block'
     document.querySelector('#head').style.display = 'none'
     onRestart()
-  })
-  document.querySelector('#restart').addEventListener('click', () => {
-    onRestart()
-  })
-  document.querySelector('#newSong').addEventListener('click', () => {
-    trySoundcloudLoad()
   })
 
   input.focus()
