@@ -44,7 +44,7 @@ window.onload = () => {
     ],
     // Biceps
     [
-      {'hammer curl': [30, 61]}
+      {'hammer curl': [30, 61]},
       {'bicep curl': [30, 61]}
     ],
     // Abs
