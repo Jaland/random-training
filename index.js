@@ -33,47 +33,47 @@ window.onload = () => {
   const exercises = [
     [
       //Legs Aerobic
-      {'forward lunges': [30, 61]},
-      {'side lunges': [30, 61]},
-      {'high knees': [30, 46]},
-      {'squats': [30, 46]},
-      {'jump squats': [20, 31]},
-      {'glute bridges': [30, 61]},
-      {'jumping jacks': [30, 46]},
-      {'butt kicks': [30, 46]}
+      {'Forward Lunges': [30, 61]},
+      {'Side Lunges': [30, 61]},
+      {'High Knees': [30, 46]},
+      {'Squats': [30, 46]},
+      {'Jump Squats': [20, 31]},
+      {'Glute Bridges': [30, 61]},
+      {'Jumping Jacks': [30, 46]},
+      {'Butt Kicks': [30, 46]}
     ],
     // Biceps and Ticeps
     [
-      {'hammer curl': [40, 61]},
-      {'bicep curl': [40, 61]},
-      {'standing dumbbell curl': [40, 61]},
-      {'bent over tricep kickbacks': [40, 61]},
-      {'skull crushers': [50, 71]},
-      {'dumbbell tricep extensions': [40, 61]}
+      {'Hammer Curl': [40, 61]},
+      {'Bicep Curl': [40, 61]},
+      {'Standing Dumbbell Curl': [40, 61]},
+      {'Bent Over Tricep Kickbacks': [40, 61]},
+      {'Skull Crushers': [50, 71]},
+      {'Dumbbell Tricep Extensions': [40, 61]}
     ],
     // Abs
     [
-      {'crunches': [30, 61]},
-      {'flutter kicks': [30, 46]},
-      {'russian twist': [30, 46]},
-      {'superman': [30, 40]},
-      {'leg raises': [20, 40]}
+      {'Crunches': [30, 61]},
+      {'Flutter Kicks': [30, 46]},
+      {'Russian Twist': [30, 46]},
+      {'Superman': [30, 40]},
+      {'Leg Raises': [20, 40]}
     ],
     // Back and sholder
     [
-      {'bent over rows': [40, 91]},
-      {'dumbell scaption': [40, 91]},
-      {'dumbbell upright row': [40, 91]},
-      {'reverse flye': [40,90] },
-      {'arnold press': [40, 80]}
+      {'Bent Over Rows': [40, 91]},
+      {'Dumbell Scaption': [40, 91]},
+      {'Dumbbell Upright row': [40, 91]},
+      {'Reverse Flye': [40,90] },
+      {'Arnold Press': [40, 80]}
     ],
     // More abs?
     [
-      {'climbers': [30, 61]},
-      {'push ups': [20, 31]},
-      {'plank rotations': [30, 46]},
-      {'elbow plank': [30, 61]},
-      {'shoulder taps': [30, 46]}
+      {'Climbers': [30, 61]},
+      {'Push Ups': [20, 31]},
+      {'Plank Rotations': [30, 46]},
+      {'Elbow Plank': [30, 61]},
+      {'Shoulder Taps': [30, 46]}
     ]
   ]
 
@@ -113,7 +113,7 @@ window.onload = () => {
 
   const setBackground = (exercise) => {
     const url =
-      `https://raw.githubusercontent.com/Jaland/random-training/main/img/${exercise.replace(/ /g, '')}.gif`
+      `https://raw.githubusercontent.com/Jaland/random-training/main/img/${exercise.replace(/ /g, '').toLowerCase()}.gif`
     body.style.backgroundImage = `url("${url}")`
   }
 
