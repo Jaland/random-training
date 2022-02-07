@@ -46,10 +46,10 @@ window.onload = () => {
     [
       {'hammer curl': [40, 61]},
       {'bicep curl': [40, 61]},
-      {'Standing Dumbbell Curl': [40, 61]},
-      {'Bent Over Tricep Kickbacks': [40, 61]},
-      {'Skull Crushers': [50, 71]},
-      {'Dumbbell Tricep Extensions': [40, 61]}
+      {'standing dumbbell curl': [40, 61]},
+      {'bent over tricep kickbacks': [40, 61]},
+      {'skull crushers': [50, 71]},
+      {'dumbbell tricep extensions': [40, 61]}
     ],
     // Abs
     [
@@ -63,9 +63,9 @@ window.onload = () => {
     [
       {'bent over rows': [40, 91]},
       {'dumbell scaption': [40, 91]},
-      {'Dumbbell Upright Row': [40, 91]},
-      {'Reverse flye': [40,90] },
-      {'Arnold press': [40, 80]}
+      {'dumbbell upright row': [40, 91]},
+      {'reverse flye': [40,90] },
+      {'arnold press': [40, 80]}
     ],
     // More abs?
     [
@@ -162,7 +162,7 @@ window.onload = () => {
       let exerciseTiming = exercise[exerciseName]
       // Figure out a time range based on parameters
       secondsToExercise = randRange(exerciseTiming[1], exerciseTiming[0])
-      exerciseType = (exerciseType + 1) % 3
+      exerciseType = (exerciseType + 1) % exercises.length
     }
     isRest = !isRest
 
